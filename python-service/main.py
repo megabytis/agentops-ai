@@ -100,7 +100,9 @@ def call_llm(full_input):
     - summary: plain text only, no markdown
     - readme: valid markdown, start with H1 title
     - base everything on actual code, don't invent features
-    - if something is unclear, state "unclear from code" """
+    - if something is unclear, state "unclear from code" 
+    
+    If you cannot determine something from the code, state "Not found in code" instead of guessing.Only suggest improvements for issues you can actually see in the files provided."""
 
     response = client.chat.completions.create(
         model=MODEL,
