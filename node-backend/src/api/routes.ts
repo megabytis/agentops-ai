@@ -23,10 +23,21 @@ app.post(
     const { repoUrl } = req.body;
 
     if (!repoUrl) {
-      res.status(400).json({
+      return res.status(400).json({
         error: "repoUrl is required",
       });
     }
+
+    // const refinedRepoUrl = String(repoUrl)
+    //   .replace("https://", "")
+    //   .replace("http://", "")
+    //   .split("/");
+
+    // if (String(refinedRepoUrl[0]) !== "github.com") {
+    //   return res.status(400).json({
+    //     error: "Provide a valid github URL",
+    //   });
+    // }
 
     let response: any;
 
@@ -67,9 +78,18 @@ app.post(
         response: data,
       };
     } catch (pyErr: any) {
+      let errorMessage = pyErr.response?.data || pyErr.message;
+      if (
+        typeof errorMessage === "string" &&
+        errorMessage.trim().startsWith("<!DOCTYPE html>")
+      ) {
+        errorMessage =
+          "AI service is currently unavailable or starting up. Please try again in a minute.";
+      }
+
       failure = {
         repoUrl: repoUrl,
-        error: pyErr.response?.data || pyErr.message,
+        error: errorMessage,
       };
       return res.status(500).json(failure);
     }
