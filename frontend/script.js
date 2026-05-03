@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const form = document.getElementById('analyze-form');
     const input = document.getElementById('repo-url');
     const submitBtn = document.getElementById('submit-btn');
@@ -10,11 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const improvementsContent = document.getElementById('improvements-content');
     const readmeContent = document.getElementById('readme-content');
 
-    // Use the ENV variable from env.js if it exists, otherwise fallback to localhost
-    const baseUrl = (typeof ENV !== 'undefined' && ENV.BACKEND_URL) 
-        ? ENV.BACKEND_URL 
-        : 'http://localhost:3000';
-    
+    // Automatically determine the backend URL based on where the frontend is running
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const baseUrl = isLocalhost 
+        ? 'http://localhost:3000' 
+        : 'https://agentops-ai-node-backend.onrender.com';
+        
     const API_URL = `${baseUrl}/api/v1/analyze-repo`;
 
     form.addEventListener('submit', async (e) => {
