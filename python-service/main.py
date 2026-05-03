@@ -16,9 +16,13 @@ auth = Auth.Token(os.getenv("GITHUB_TOKEN"))
 g = Github(auth=auth)
 
 # llm_stuffs
-API = os.getenv("GROQ_API_KEY")
-MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"
-URL = "https://api.groq.com/openai/v1"
+# API = os.getenv("GROQ_API_KEY")
+# MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"
+# URL = "https://api.groq.com/openai/v1"
+
+API = os.getenv("DEEPSEEK_API_KEY")
+MODEL = "deepseek-chat"
+URL = "https://api.deepseek.com/"
 
 client = OpenAI(
     api_key=API,
