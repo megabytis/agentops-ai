@@ -107,3 +107,9 @@ Then simply open `frontend/index.html` in your browser — no build step require
 | **python-service** | `GROQ_API_KEY` | Groq API key for LLM calls |
 | **node-backend** | `AI_SERVICE_URL` | URL of the Python AI service |
 | **frontend** | `BACKEND_URL` (in `env.js`) | URL of the Node.js backend |
+
+## Limitations
+
+- Works best for repos under 500 files
+- Large repos (Go, Linux kernel, etc.) will timeout
+- V2 will handle large repos
