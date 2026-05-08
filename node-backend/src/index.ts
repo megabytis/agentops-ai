@@ -6,7 +6,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://agentops-ai.vercel.app/",
+    origin: "https://agentops-ai.vercel.app",
   }),
 );
 app.use("/api/v1", route);
