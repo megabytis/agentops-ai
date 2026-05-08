@@ -61,6 +61,7 @@ def get_tree_content(url: str) -> list:
     MAX_FILES = 15
     MAX_CHARS_PER_FILE = 800
     total_chars = 0
+    max_total_chars = MAX_FILES * MAX_CHARS_PER_FILE
 
     for item in tree.tree:
         if item.type != "blob":  # skiping non-file stuffs
@@ -78,6 +79,10 @@ def get_tree_content(url: str) -> list:
 
         f = repo.get_contents(item.path)
         text = base64.b64decode(f.content).decode("utf-8", errors="replace")
+
+        total_chars += len(text)
+        if total_chars > max_total_chars:
+            break
 
         all_contents.append(f"FILE: {item.path}\n{text[:MAX_CHARS_PER_FILE]}\n")
 
@@ -132,6 +137,5 @@ async def workflow(request: Workflow):
     full_input = readme_section + code_section
 
     response = call_llm(full_input)
-    
 
     return json.loads(response)
